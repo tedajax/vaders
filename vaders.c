@@ -57,8 +57,6 @@ int main(int argc, char* argv[])
 
 	player = player_make();
 
-	long flipTime = 0;
-
 	while (globals.bRun)
 	{
 		while (SDL_PollEvent(&event))

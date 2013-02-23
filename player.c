@@ -2,6 +2,7 @@
 #include "util.h"
 #include "globals.h"
 #include "input.h"
+#include <math.h>
 
 player_t player_make()
 {
@@ -21,6 +22,8 @@ void player_update(player_t *p)
 
 	if (input_get_key(SDLK_RIGHT))
 		p->position.x += p->moveSpeed * globals.time.deltaf;
+
+	p->position.x = clampf(p->position.x, 0, globals.window.width - 64);
 }
 
 void player_draw(player_t *p)

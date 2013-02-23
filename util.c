@@ -94,3 +94,9 @@ point point_from_vec2(vec2 vec)
 	return p;
 }
 
+float clampf(float val, float min, float max)
+{
+	if (val < min) val = min;
+	if (val > max) val = max;
+	return val;
+}

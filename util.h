@@ -48,4 +48,6 @@ vec2 v2neg(vec2 vec);
 point pointmake(int x, int y);
 point point_from_vec2(vec2 vec);
 
+float clampf(float val, float min, float max);
+
 #endif
