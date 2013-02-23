@@ -67,6 +67,11 @@ int main(int argc, char* argv[])
 				globals.bRun = false;
 		}
 
+		globals.time.sinceStart = SDL_GetTicks() - globals.time.start;
+		globals.time.delta = SDL_GetTicks() - globals.time.last;
+		globals.time.deltaf = (float)globals.time.delta / 1000.0f;
+		globals.time.last = SDL_GetTicks();
+
 		SDL_FillRect(globals.screen, NULL, SDL_MapRGB(globals.screen->format, 0, 0, 0));
 
 		if (input_get_key_down(SDLK_ESCAPE))

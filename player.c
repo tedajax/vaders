@@ -8,7 +8,7 @@ player_t player_make()
 	player_t p;
 	p.position = v2make(globals.window.width / 2 - 32, globals.window.height - 64);
 	p.image = load_image("assets/tank.png");
-	p.moveSpeed = 10.0f;
+	p.moveSpeed = 500.0f;
 	return p;
 }
 
