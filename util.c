@@ -2,10 +2,11 @@
 
 SDL_Surface *load_image(const char* filename)
 {
-	if (!filename) return NULL;
-
 	SDL_Surface *loadedImage = NULL;
 	SDL_Surface *optimizedImage = NULL;
+
+	if (!filename) return NULL;
+		
 	loadedImage = IMG_Load(filename);
 
 	if (loadedImage != NULL)
@@ -19,10 +20,11 @@ SDL_Surface *load_image(const char* filename)
 
 void apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destination)
 {
+	SDL_Rect offset;
+
 	if (source == NULL || destination == NULL)
 		return;
 
-	SDL_Rect offset;
 	offset.x = x;
 	offset.y = y;
 

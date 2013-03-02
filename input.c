@@ -14,7 +14,8 @@ void input_cleanup()
 
 void input_update()
 {
-	for (int i = 0; i < SDLK_LAST; i++)
+	int i;
+	for (i = 0; i < SDLK_LAST; i++)
 		oldKeystates[i] = newKeystates[i];
 }
 
