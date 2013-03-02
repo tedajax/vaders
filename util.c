@@ -96,3 +96,66 @@ point point_from_vec2(vec2 vec)
 	return p;
 }
 
+rect rect_make(int x, int y, int width, int height)
+{
+	rect newrect = {x, y, width, height};
+	return newrect;
+}
+
+rect rect_copy(rect *other)
+{
+	rect newrect = {other->x, other->y, other->w, other->h};
+	return newrect;
+}
+
+int rect_left(rect *r)
+{
+	return r->x;
+}
+
+int rect_right(rect *r)
+{
+	return r->x + r->w;
+}
+
+int rect_top(rect *r)
+{
+	return r->y;
+}
+
+int rect_bottom(rect *r)
+{
+	return r->y + r->h;
+}
+
+bool rect_in_rect(rect *r1, rect *r2)
+{
+	
+}
+
+bool rect_in_circle(rect *r, circle *c)
+{
+
+}
+
+circle circle_make(int x, int y, int radius)
+{
+	circle newcirc = {x, y, radius};
+	return newcirc;
+}
+
+circle circle_copy(circle *other)
+{
+	circle newcirc = {other->x, other->y, other->r};
+	return newcirc;
+}
+
+bool circle_in_rect(rect *r, circle *c)
+{
+
+}
+
+bool circle_in_circle(circle *c1, circle *c2)
+{
+	
+}

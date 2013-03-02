@@ -32,6 +32,16 @@ typedef struct
 	int x, y;
 } point;
 
+typedef struct  
+{
+	int x, y, w, h;
+} rect;
+
+typedef struct
+{
+	int x, y, r;
+} circle;
+
 SDL_Surface *load_image(const char* filename);
 void apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destination);
 
@@ -47,5 +57,19 @@ vec2 v2perp(vec2 vec);
 vec2 v2neg(vec2 vec);
 point pointmake(int x, int y);
 point point_from_vec2(vec2 vec);
+
+rect rect_make(int x, int y, int width, int height);
+rect rect_copy(rect *other);
+int rect_left(rect *r);
+int rect_right(rect *r);
+int rect_top(rect *r);
+int rect_bottom(rect *r);
+bool rect_in_rect(rect *r1, rect *r2);
+bool rect_in_circle(rect *r, circle *c);
+
+circle circle_make(int x, int y, int radius);
+circle circle_copy(circle *other);
+bool circle_in_rect(rect *r, circle *c);
+bool circle_in_circle(circle *c1, circle *c2);
 
 #endif
