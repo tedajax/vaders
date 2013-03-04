@@ -14,7 +14,7 @@
 #define true 1
 #define false 0
 
-#define SQR(x) (x*x)
+#define SQR(x) ((x)*(x))
 
 #define PI			3.14159265351f
 #define PIOVER2 	1.57079632679f
@@ -31,6 +31,16 @@ typedef struct
 {
 	int x, y;
 } point;
+
+typedef struct  
+{
+	int x, y, w, h;
+} rect;
+
+typedef struct
+{
+	int x, y, r;
+} circle;
 
 SDL_Surface *load_image(const char* filename);
 void apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destination);
@@ -49,5 +59,23 @@ point pointmake(int x, int y);
 point point_from_vec2(vec2 vec);
 
 float clampf(float val, float min, float max);
+
+//rectangle functions
+rect rect_make(int x, int y, int width, int height);
+rect rect_copy(rect *other);
+int rect_left(rect *r);
+int rect_right(rect *r);
+int rect_top(rect *r);
+int rect_bottom(rect *r);
+
+//circle functions
+circle circle_make(int x, int y, int radius);
+circle circle_copy(circle *other);
+
+//collision functions
+bool intersect_rr(rect *r1, rect *r2);
+bool intersect_rc(rect *r, circle *c);
+bool intersect_cr(circle *c, rect *r);
+bool intersect_cc(circle *c1, circle *c2);
 
 #endif

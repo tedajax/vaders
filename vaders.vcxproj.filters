@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{9faf0649-f1ef-4d6a-8432-563d34a5a635}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources">
+      <UniqueIdentifier>{65321f2c-4f40-415e-b044-bc864526e1a8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="util.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="globals.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="input.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="util.c">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="globals.c">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="input.c">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="player.c">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="vaders.c">
+      <Filter>Sources</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

@@ -17,3 +17,9 @@
 *.app
 
 vaders
+
+# Visual studio stuff
+Debug/
+ipch/
+*.opensdf
+*.suo

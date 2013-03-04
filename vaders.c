@@ -50,18 +50,19 @@ void draw()
 
 int main(int argc, char* argv[])
 {
+	SDL_Event osEvent;
+	long flipTime = 0;
+
 	if (init() == false)
 		return EXIT_FAILURE;
-
-	SDL_Event event;
 
 	player = player_make();
 
 	while (globals.bRun)
 	{
-		while (SDL_PollEvent(&event))
+		while (SDL_PollEvent(&osEvent))
 		{
-			if (event.type == SDL_QUIT)
+			if (osEvent.type == SDL_QUIT)
 				globals.bRun = false;
 		}
 
