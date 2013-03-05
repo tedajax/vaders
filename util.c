@@ -109,30 +109,30 @@ rect rect_make(int x, int y, int width, int height)
 	return newrect;
 }
 
-rect rect_copy(rect *other)
+rect rect_copy(rect other)
 {
-	rect newrect = {other->x, other->y, other->w, other->h};
+	rect newrect = {other.x, other.y, other.w, other.h};
 	return newrect;
 }
 
-int rect_left(rect *r)
+int rect_left(rect r)
 {
-	return r->x;
+	return r.x;
 }
 
-int rect_right(rect *r)
+int rect_right(rect r)
 {
-	return r->x + r->w;
+	return r.x + r.w;
 }
 
-int rect_top(rect *r)
+int rect_top(rect r)
 {
-	return r->y;
+	return r.y;
 }
 
-int rect_bottom(rect *r)
+int rect_bottom(rect r)
 {
-	return r->y + r->h;
+	return r.y + r.h;
 }
 
 circle circle_make(int x, int y, int radius)
@@ -141,16 +141,14 @@ circle circle_make(int x, int y, int radius)
 	return newcirc;
 }
 
-circle circle_copy(circle *other)
+circle circle_copy(circle other)
 {
-	circle newcirc = {other->x, other->y, other->r};
+	circle newcirc = {other.x, other.y, other.r};
 	return newcirc;
 }
 
-bool intersect_rr(rect *r1, rect *r2)
+bool intersect_rr(rect r1, rect r2)
 {
-	assert(r1 && r2);
-
 	int r1l = rect_left(r1), r1r = rect_right(r1), r1t = rect_top(r1), r1b = rect_bottom(r1);
 	int r2l = rect_left(r2), r2r = rect_right(r2), r2t = rect_top(r2), r2b = rect_bottom(r2);
 
@@ -158,23 +156,22 @@ bool intersect_rr(rect *r1, rect *r2)
 		    ((r1t >= r2t && r1t <= r2b) || (r1b >= r2t && r1b <= r2t)));	
 }
 
-bool intersect_rc(rect *r, circle *c)
+bool intersect_rc(rect r, circle c)
 {
-	assert(r && c);
+	int rl = rect_left(r) - c.r, 
+		rr = rect_right(r) + c.r, 
+		rt = rect_top(r) - c.r, 
+		rb = rect_bottom(r) + c.r;
 
-	int rl = rect_left(r) - c->r, rr = rect_right(r) + c->r, rt = rect_top(r) - c->r, rb = rect_bottom(r) + c->r;
-
-	return (c->x >= rl && c->x <= rr && c->y >= rt && c->y <= rb);
+	return (c.x >= rl && c.x <= rr && c.y >= rt && c.y <= rb);
 }
 
-bool intersect_cr(circle *c, rect *r)
+bool intersect_cr(circle c, rect r)
 {
 	return intersect_rc(r, c);
 }
 
-bool intersect_cc(circle *c1, circle *c2)
+bool intersect_cc(circle c1, circle c2)
 {
-	assert(c1 && c2);
-
-	return (SQR(c1->x - c2->x) + SQR(c1->y - c2->y) <= SQR(c1->r + c2->r));
+	return (SQR(c1.x - c2.x) + SQR(c1.y - c2.y) <= SQR(c1.r + c2.r));
 }

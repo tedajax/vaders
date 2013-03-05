@@ -1,13 +1,13 @@
 TARGET=vaders
 
 CXX=gcc
-CXXFLAGS=
+CXXFLAGS=-Wno-unknown-pragmas
 CPPFLAGS=
 LDFLAGS=
 LDLIBS=-lSDL_image
 
-SRCS=vaders.c util.c globals.c input.c player.c
-INCLUDES=vaders.h util.h globals.h input.h player.h
+SRCS=vaders.c util.c globals.c input.c player.c bullet.c images.c
+INCLUDES=vaders.h util.h globals.h input.h player.h bullet.h images.h
 OBJS=$(subst .c,.o,$(SRCS))
 
 all: $(TARGET)

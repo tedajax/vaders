@@ -62,20 +62,20 @@ float clampf(float val, float min, float max);
 
 //rectangle functions
 rect rect_make(int x, int y, int width, int height);
-rect rect_copy(rect *other);
-int rect_left(rect *r);
-int rect_right(rect *r);
-int rect_top(rect *r);
-int rect_bottom(rect *r);
+rect rect_copy(rect other);
+int rect_left(rect r);
+int rect_right(rect r);
+int rect_top(rect r);
+int rect_bottom(rect r);
 
 //circle functions
 circle circle_make(int x, int y, int radius);
-circle circle_copy(circle *other);
+circle circle_copy(circle other);
 
 //collision functions
-bool intersect_rr(rect *r1, rect *r2);
-bool intersect_rc(rect *r, circle *c);
-bool intersect_cr(circle *c, rect *r);
-bool intersect_cc(circle *c1, circle *c2);
+bool intersect_rr(rect r1, rect r2);
+bool intersect_rc(rect r, circle c);
+bool intersect_cr(circle c, rect r);
+bool intersect_cc(circle c1, circle c2);
 
 #endif

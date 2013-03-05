@@ -12,6 +12,7 @@ struct globals_t
 		int height;
 		int bpp;
 	} window;
+	
 	SDL_Surface *screen;
 	bool bRun;
 
