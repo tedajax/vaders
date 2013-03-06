@@ -4,6 +4,8 @@
 #include "globals.h"
 #include "input.h"
 #include "player.h"
+#include "bullet.h"
+#include "images.h"
 
 player_t player;
 
@@ -28,6 +30,10 @@ bool init()
 
 	input_init();
 
+	init_image_assets();
+	push_image_asset("tank", load_image("assets/tank.png"));
+	push_image_asset("bullet", load_image("assets/bullet.png"));
+
 	return true;
 }
 
@@ -35,17 +41,20 @@ void cleanup()
 {
 	input_cleanup();
 	SDL_FreeSurface(globals.screen);
+	free_image_assets();
 	SDL_Quit();
 }
 
 void update()
 {
 	player_update(&player);
+	bullets_update();
 }
 
 void draw()
 {
 	player_draw(&player);
+	bullets_draw();
 }
 
 int main(int argc, char* argv[])
@@ -56,6 +65,8 @@ int main(int argc, char* argv[])
 		return EXIT_FAILURE;
 
 	player = player_make();
+
+	init_bullets();
 
 	while (globals.bRun)
 	{

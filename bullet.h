@@ -24,11 +24,11 @@ bullet_t *bullets[MAX_BULLETS];
 int freeBullets[MAX_BULLETS];
 int freeBulletsHead;
 
-void init_bullets();
 bool add_bullet(bullet_t *bullet);
 void remove_bullet(int index);
 int get_next_bullet_index();
 
+void init_bullets();
 void bullets_update();
 void bullets_draw();
 

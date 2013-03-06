@@ -2,7 +2,7 @@ TARGET=vaders
 
 CXX=gcc
 CXXFLAGS=-Wno-unknown-pragmas
-CPPFLAGS=
+CPPFLAGS=-g
 LDFLAGS=
 LDLIBS=-lSDL_image
 
