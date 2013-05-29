@@ -5,7 +5,7 @@
 #include "globals.h"
 #include "util.h"
 
-#define MAX_BULLETS 200
+static const int MAX_BULLETS = 2;
 
 typedef struct
 {
@@ -17,18 +17,17 @@ typedef struct
 	bool destroy;
 } bullet_t;
 
-void bullet_update(bullet_t *bullet);
-void bullet_draw(bullet_t *bullet);
+void bullet_update(bullet_t *self);
+void bullet_draw(bullet_t *bself);
 
-bullet_t *bullets[MAX_BULLETS];
-int freeBullets[MAX_BULLETS];
-int freeBulletsHead;
+bullet_t **bullets;
+stack freeIndices;
 
-bool add_bullet(bullet_t *bullet);
-void remove_bullet(int index);
-int get_next_bullet_index();
+bool bullet_add(bullet_t *self);
+void bullet_remove(int index);
+int bullet_next_index();
 
-void init_bullets();
+void bullets_init();
 void bullets_update();
 void bullets_draw();
 

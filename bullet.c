@@ -3,105 +3,102 @@
 #include "util.h"
 #include "bullet.h"
 
-void bullet_update(bullet_t *bullet)
+const float BULLET_DESTROY_HEIGHT = -5.0f;
+
+void bullet_update(bullet_t *self)
 {
-	assert(bullet);
-	printf("bu\n");
-	bullet->position = v2add(bullet->position, v2scale(bullet->velocity, globals.time.deltaf));
+	assert(self);
+	self->position = v2add(self->position, v2scale(self->velocity, globals.time.deltaf));
+
+	if (self->position.y <= BULLET_DESTROY_HEIGHT) {
+		self->destroy = true;
+	}
 }
 
-void bullet_draw(bullet_t *bullet)
+void bullet_draw(bullet_t *self)
 {
-	assert(bullet && bullet->image);
-	printf("bd\n");
-	apply_surface(bullet->position.x, bullet->position.y, bullet->image, globals.screen);
+	assert(self && self->image);
+	apply_surface(self->position.x, self->position.y, self->image, globals.screen);
 }
 
-bool add_bullet(bullet_t *bullet)
+bool bullet_add(bullet_t *self)
 {
 	int index = 0;
+	assert(self);
 
-	assert(bullet);
-
-	index = get_next_bullet_index();
-	if (index < 0)
+	index = bullet_next_index();
+	if (index < 0) {
 		return false;
+	}
 
-	bullets[index] = bullet;
+	bullets[index] = self;
 
 	return true;
 }
 
-void remove_bullet(int index)
+void bullet_remove(int index)
 {
 	assert(index >= 0 && index < MAX_BULLETS);
 
-	if (bullets[index])
-	{
+	if (bullets[index]) {
+		free(bullets[index]);
 		bullets[index] = NULL;
 
-		if (freeBulletsHead > 0)
-		{
-			freeBullets[--freeBulletsHead] = index;
-		}
+		stack_push(&freeIndices, (void *)&index);
 	}
 }
 
-int get_next_bullet_index()
+int bullet_next_index()
 {
 	int result;
 
-	if (freeBulletsHead < MAX_BULLETS)
-	{
-		result = freeBullets[freeBulletsHead++];
-	}
-	else
-	{
+	if (stack_size(&freeIndices) > 0) {
+		void *dest = malloc(sizeof(int));
+		stack_pop(&freeIndices, dest);
+		result = *((int *)dest);
+		free(dest);
+	} else {
 		result = -1;
 	}
 
 	return result;
 }
 
-void init_bullets()
+void bullets_init()
 {
-	int i;
-	for (i = 0; i < MAX_BULLETS; i++)
-	{
-		bullets[i] = NULL;
-		freeBullets[i] = i;
-	}	
+	bullets = (bullet_t **)malloc(MAX_BULLETS * sizeof(bullet_t *));
+	stack_init(&freeIndices, MAX_BULLETS, sizeof(int), NULL);
 
-	freeBulletsHead = 0;
+	for (int i = 0; i < MAX_BULLETS; i++) {
+		bullets[i] = NULL;
+		stack_push(&freeIndices, (void *)&i);
+	}	
 }
 
 void bullets_update()
 {
 	int i;
 
-	for (i = 0; i < MAX_BULLETS; i++)
-	{
-		if (bullets[i])
+	for (i = 0; i < MAX_BULLETS; ++i) {
+		if (bullets[i]) {
 			bullet_update(bullets[i]);
+		}
 	}
 
-	// for (i = 0; i < MAX_BULLETS; i++)
-	// {
-	// 	if (bullets[i])
-	// 	{
-	// 		if (bullets[i]->destroy)
-	// 			remove_bullet(i);
-	// 	}
-	// }
+	for (i = 0; i < MAX_BULLETS; ++i) {
+		if (bullets[i] && bullets[i]->destroy) {
+			bullet_remove(i);
+		}
+	}
 }
 
 void bullets_draw()
 {
 	int i;
 
-	for (i = 0; i < MAX_BULLETS; i++)
-	{
-		if (bullets[i])
+	for (i = 0; i < MAX_BULLETS; i++) {
+		if (bullets[i]) {
 			bullet_draw(bullets[i]);
+		}
 	}
 }

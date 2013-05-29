@@ -175,3 +175,55 @@ bool intersect_cc(circle c1, circle c2)
 {
 	return (SQR(c1.x - c2.x) + SQR(c1.y - c2.y) <= SQR(c1.r + c2.r));
 }
+
+void stack_init(stack *self, int size, int elemSize, clearmem clearFunc)
+{
+	self->capacity = size;
+	self->elemSize = elemSize;
+	self->head = -1;
+	self->elements = malloc(self->capacity * self->elemSize);
+	self->clearFunction = clearFunc;
+}
+
+void stack_push(stack *self, void *elem)
+{
+	self->head++;
+	assert(self->head < self->capacity);
+
+	void *addr = (uint8_t *)self->elements + self->head * self->elemSize;
+	memcpy(addr, elem, self->elemSize);
+}
+
+void stack_pop(stack *self, void *destination)
+{
+	assert(self->head >= 0);
+	self->head--;
+
+	void *addr = (uint8_t *)self->elements + (self->head + 1) * self->elemSize;
+	memcpy(destination, addr, self->elemSize);
+}
+
+void stack_peek(stack *self, void *destination)
+{
+	assert(self->head >= 0);
+
+	void *addr = (uint8_t *)self->elements + (self->head + 1) * self->elemSize;
+	memcpy(destination, addr, self->elemSize);
+}
+
+void stack_free(stack *self)
+{
+	if (self->clearFunction != NULL) {
+		while (self->head >= 0) {
+			self->head--;
+			void *addr = (uint8_t *)self->elements + self->head * self->elemSize;
+			self->clearFunction(addr);
+		}
+	}
+
+	free(self->elements);
+}
+
+uint32_t stack_size(stack *self) {
+	return self->head + 1;
+}

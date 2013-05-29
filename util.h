@@ -9,6 +9,7 @@
 #include <SDL/SDL_image.h>
 #include <math.h>
 #include <assert.h>
+#include <stdint.h>
 
 #define bool int
 #define true 1
@@ -41,6 +42,17 @@ typedef struct
 {
 	int x, y, r;
 } circle;
+
+typedef void (*clearmem)(void *);
+
+typedef struct
+{	
+	int head;
+	int capacity;
+	int elemSize;
+	void *elements;
+	clearmem clearFunction;
+} stack;
 
 SDL_Surface *load_image(const char* filename);
 void apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destination);
@@ -77,5 +89,12 @@ bool intersect_rr(rect r1, rect r2);
 bool intersect_rc(rect r, circle c);
 bool intersect_cr(circle c, rect r);
 bool intersect_cc(circle c1, circle c2);
+
+void stack_init(stack *self, int size, int elemSize, clearmem clearFunc);
+void stack_push(stack *self, void *elem);
+void stack_pop(stack *self, void *destination);
+void stack_peek(stack *self, void *destination);
+void stack_free(stack *self);
+uint32_t stack_size(stack *self);
 
 #endif

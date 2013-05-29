@@ -7,7 +7,7 @@
 #include "bullet.h"
 #include "images.h"
 
-player_t player;
+player_t *player;
 
 bool init()
 {
@@ -19,12 +19,13 @@ bool init()
 	SDL_SetVideoMode(globals.window.width,
 					 globals.window.height, 
 					 globals.window.bpp, 
-					 SDL_SWSURFACE);
+					 SDL_HWSURFACE);
 
 	globals.screen = SDL_GetVideoSurface();
 
-	if (globals.screen == NULL)
+	if (globals.screen == NULL) {
 		return false;
+	}
 
 	SDL_WM_SetCaption("Vaders", NULL);
 
@@ -47,13 +48,13 @@ void cleanup()
 
 void update()
 {
-	player_update(&player);
+	player_update(player);
 	bullets_update();
 }
 
 void draw()
 {
-	player_draw(&player);
+	player_draw(player);
 	bullets_draw();
 }
 
@@ -61,19 +62,19 @@ int main(int argc, char* argv[])
 {
 	SDL_Event osEvent;
 	
-	if (init() == false)
+	if (init() == false) {
 		return EXIT_FAILURE;
+	}
 
 	player = player_make();
 
-	init_bullets();
+	bullets_init();
 
-	while (globals.bRun)
-	{
-		while (SDL_PollEvent(&osEvent))
-		{
-			if (osEvent.type == SDL_QUIT)
+	while (globals.bRun) {
+		while (SDL_PollEvent(&osEvent)) {
+			if (osEvent.type == SDL_QUIT) {
 				globals.bRun = false;
+			}
 		}
 
 		globals.time.sinceStart = SDL_GetTicks() - globals.time.start;
@@ -83,8 +84,9 @@ int main(int argc, char* argv[])
 
 		SDL_FillRect(globals.screen, NULL, SDL_MapRGB(globals.screen->format, 0, 0, 0));
 
-		if (input_get_key_down(SDLK_ESCAPE))
+		if (input_get_key_down(SDLK_ESCAPE)) {
 			globals.bRun = false;
+		}
 
 		update();
 		draw();
