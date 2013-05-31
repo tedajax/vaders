@@ -4,10 +4,10 @@ CXX=gcc
 CXXFLAGS=-Wno-unknown-pragmas
 CPPFLAGS=-g
 LDFLAGS=
-LDLIBS=-lSDL_image
+LDLIBS=-lSDL_image -lSDL_gfx
 
-SRCS=vaders.c util.c globals.c input.c player.c enemy.c bullet.c images.c
-INCLUDES=vaders.h util.h globals.h input.h player.h enemy.h bullet.h images.h
+SRCS=vaders.c util.c globals.c input.c player.c enemy.c bullet.c images.c collider.c
+INCLUDES=vaders.h util.h globals.h input.h player.h enemy.h bullet.h images.h collider.h
 OBJS=$(subst .c,.o,$(SRCS))
 
 all: $(TARGET)

@@ -2,6 +2,7 @@
 #include "globals.h"
 #include "util.h"
 #include "bullet.h"
+#include "collider.h"
 
 const float BULLET_DESTROY_HEIGHT = -5.0f;
 
@@ -9,6 +10,13 @@ void bullet_update(bullet_t *self)
 {
 	assert(self);
 	self->position = v2add(self->position, v2scale(self->velocity, globals.time.deltaf));
+
+	self->collider.bounds.x = self->position.x;
+	self->collider.bounds.y = self->position.y;
+
+	if (self->collider.colliding) {
+		self->destroy = true;
+	}
 
 	if (self->position.y <= BULLET_DESTROY_HEIGHT) {
 		self->destroy = true;
@@ -23,10 +31,11 @@ void bullet_draw(bullet_t *self)
 
 bool bullet_add(bullet_t *self)
 {
-	int index = 0;
 	assert(self);
 
-	index = bullet_next_index();
+	int index = bullet_next_index();
+
+	//this allows for gracefully not adding bullets
 	if (index < 0) {
 		return false;
 	}
@@ -41,6 +50,7 @@ void bullet_remove(int index)
 	assert(index >= 0 && index < MAX_BULLETS);
 
 	if (bullets[index]) {
+		colliders_remove(&bullets[index]->collider);
 		free(bullets[index]);
 		bullets[index] = NULL;
 
@@ -53,10 +63,7 @@ int bullet_next_index()
 	int result;
 
 	if (stack_size(&freeIndices) > 0) {
-		void *dest = malloc(sizeof(int));
-		stack_pop(&freeIndices, dest);
-		result = *((int *)dest);
-		free(dest);
+		stack_pop(&freeIndices, &result);
 	} else {
 		result = -1;
 	}
@@ -69,7 +76,7 @@ void bullets_init()
 	bullets = (bullet_t **)malloc(MAX_BULLETS * sizeof(bullet_t *));
 	stack_init(&freeIndices, MAX_BULLETS, sizeof(int), NULL);
 
-	for (int i = 0; i < MAX_BULLETS; i++) {
+	for (int i = 0; i < MAX_BULLETS; ++i) {
 		bullets[i] = NULL;
 		stack_push(&freeIndices, (void *)&i);
 	}	

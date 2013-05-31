@@ -4,6 +4,7 @@
 #include "input.h"
 #include "bullet.h"
 #include "images.h"
+#include "collider.h"
 #include <math.h>
 
 const vec2 PLAYER_BULLET_OFFSET = {30, 24};
@@ -38,11 +39,12 @@ void _player_shooting(player_t *self)
 	if (input_get_key_down(SDLK_z)) {
 		bullet_t *bullet = (bullet_t *)malloc(sizeof(bullet_t));
 		bullet->position = v2add(self->position, PLAYER_BULLET_OFFSET);
-		bullet->collider = rect_make(0, 0, 4, 4);
 		bullet->velocity = v2make(0.0f, -self->bulletSpeed);
 		bullet->sourceType = BULLET_PLAYER_SOURCE;
 		bullet->image = get_image("bullet");
 		bullet->destroy = false;
+		collider_init(&bullet->collider, bullet->position, 4, 4, COLLISION_TAG_PLAYER_BULLET, COLLISION_TAG_ENEMY);
+		colliders_add(&bullet->collider);
 
 		bullet_add(bullet);
 	}

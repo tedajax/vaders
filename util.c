@@ -152,8 +152,7 @@ bool intersect_rr(rect r1, rect r2)
 	int r1l = rect_left(r1), r1r = rect_right(r1), r1t = rect_top(r1), r1b = rect_bottom(r1);
 	int r2l = rect_left(r2), r2r = rect_right(r2), r2t = rect_top(r2), r2b = rect_bottom(r2);
 
-	return (((r1l >= r2l && r1l <= r2r) || (r1r >= r2l && r1r <= r2r)) &&
-		    ((r1t >= r2t && r1t <= r2b) || (r1b >= r2t && r1b <= r2t)));	
+	return (r1r >= r2l && r1l <= r2r) && (r1b >= r2t && r1t <= r2b);	
 }
 
 bool intersect_rc(rect r, circle c)

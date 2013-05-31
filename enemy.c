@@ -4,10 +4,15 @@
 #include "util.h"
 #include "enemy.h"
 #include "images.h"
+#include "collider.h"
 
 void enemy_update(enemy_t *self)
 {
 	assert(self);
+
+	if (self->collider.colliding) {
+		enemy_kill(self);
+	}
 }
 
 void enemy_move(enemy_t *self, vec2 dist)
@@ -15,12 +20,15 @@ void enemy_move(enemy_t *self, vec2 dist)
 	assert(self);
 
 	self->position = v2add(self->position, dist);
+	self->collider.bounds.x = self->position.x;
+	self->collider.bounds.y = self->position.y;
 }
 
 void enemy_kill(enemy_t *self)
 {
 	if (!self->dead) {
 		self->dead = true;
+		self->collider.enabled = false;
 		enemies_update_bounds();
 		enemies_update_move_delay();
 	}
@@ -52,7 +60,8 @@ void enemies_reset_formation()
 		float x = (i % 10) * 72.0f + 2;
 		float y = (i / 10) * 72.0f;
 		e->position = v2make(x, y);
-		e->collider = rect_make(0, 0, 48, 48);
+		collider_init(&e->collider, e->position, 48, 48, COLLISION_TAG_ENEMY, COLLISION_TAG_PLAYER_BULLET);
+		colliders_add(&e->collider);
 		e->dead = false;
 
 		e->image = get_image("enemy1");

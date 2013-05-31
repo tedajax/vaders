@@ -6,6 +6,7 @@
 #include "player.h"
 #include "enemy.h"
 #include "bullet.h"
+#include "collider.h"
 #include "images.h"
 
 player_t *player;
@@ -53,6 +54,7 @@ void update()
 	player_update(player);
 	enemies_update();
 	bullets_update();
+	colliders_update();
 }
 
 void draw()
@@ -60,6 +62,8 @@ void draw()
 	player_draw(player);
 	enemies_draw();
 	bullets_draw();
+
+	// colliders_debug_draw();
 }
 
 int main(int argc, char* argv[])
@@ -72,6 +76,7 @@ int main(int argc, char* argv[])
 
 	player = player_make();
 
+	colliders_init();
 	bullets_init();
 	enemies_init();
 	// enemies_reset_formation();

@@ -4,6 +4,7 @@
 #include <SDL/SDL.h>
 #include "globals.h"
 #include "util.h"
+#include "collider.h"
 
 static const int MAX_ENEMIES = 30;
 static const float MAX_MOVE_DELAY = 1.5f;
@@ -14,7 +15,7 @@ static const float VERTICAL_MOVEMENT_PER_TICK = 24.0f;
 typedef struct
 {
 	vec2 position;
-	rect collider;
+	collider_t collider;
 	SDL_Surface *image;
 	bool dead;
 } enemy_t;
@@ -32,6 +33,7 @@ bool enemiesMoveRight;
 void enemy_update(enemy_t *self);
 void enemy_move(enemy_t *self, vec2 dist);
 void enemy_draw(enemy_t *self);
+void enemy_kill(enemy_t *self);
 
 void enemies_init();
 void enemies_update();
