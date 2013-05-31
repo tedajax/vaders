@@ -4,6 +4,7 @@
 #include "globals.h"
 #include "input.h"
 #include "player.h"
+#include "enemy.h"
 #include "bullet.h"
 #include "images.h"
 
@@ -34,6 +35,7 @@ bool init()
 	init_image_assets();
 	push_image_asset("tank", load_image("assets/tank.png"));
 	push_image_asset("bullet", load_image("assets/bullet.png"));
+	push_image_asset("enemy1", load_image("assets/enemy.png"));
 
 	return true;
 }
@@ -49,12 +51,14 @@ void cleanup()
 void update()
 {
 	player_update(player);
+	enemies_update();
 	bullets_update();
 }
 
 void draw()
 {
 	player_draw(player);
+	enemies_draw();
 	bullets_draw();
 }
 
@@ -69,6 +73,8 @@ int main(int argc, char* argv[])
 	player = player_make();
 
 	bullets_init();
+	enemies_init();
+	// enemies_reset_formation();
 
 	while (globals.bRun) {
 		while (SDL_PollEvent(&osEvent)) {

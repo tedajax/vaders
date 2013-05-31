@@ -38,8 +38,9 @@ void _player_shooting(player_t *self)
 	if (input_get_key_down(SDLK_z)) {
 		bullet_t *bullet = (bullet_t *)malloc(sizeof(bullet_t));
 		bullet->position = v2add(self->position, PLAYER_BULLET_OFFSET);
+		bullet->collider = rect_make(0, 0, 4, 4);
 		bullet->velocity = v2make(0.0f, -self->bulletSpeed);
-		bullet->sourceType = 0;
+		bullet->sourceType = BULLET_PLAYER_SOURCE;
 		bullet->image = get_image("bullet");
 		bullet->destroy = false;
 

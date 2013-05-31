@@ -5,13 +5,16 @@
 #include "globals.h"
 #include "util.h"
 
-static const int MAX_BULLETS = 2;
+static const int MAX_BULLETS = 20;
+
+static const int BULLET_PLAYER_SOURCE = 0;
+static const int BULLET_ENEMY_SOURCE = 1;
 
 typedef struct
 {
 	vec2 position;
 	vec2 velocity;
-	rect bounds;
+	rect collider;
 	int sourceType;
 	SDL_Surface *image;
 	bool destroy;
@@ -30,5 +33,6 @@ int bullet_next_index();
 void bullets_init();
 void bullets_update();
 void bullets_draw();
+void bullets_cleanup();
 
 #endif

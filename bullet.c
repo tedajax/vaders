@@ -94,11 +94,21 @@ void bullets_update()
 
 void bullets_draw()
 {
-	int i;
-
-	for (i = 0; i < MAX_BULLETS; i++) {
+	for (int i = 0; i < MAX_BULLETS; ++i) {
 		if (bullets[i]) {
 			bullet_draw(bullets[i]);
 		}
 	}
+}
+
+void bullets_cleanup()
+{
+	for (int i = 0; i < MAX_BULLETS; ++i) {
+		if (bullets[i]) {
+			free(bullets[i]);
+			bullets[i] = NULL;
+		}
+	}
+
+	free(bullets);
 }
