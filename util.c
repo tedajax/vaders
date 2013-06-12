@@ -9,8 +9,7 @@ SDL_Surface *load_image(const char* filename)
 		
 	loadedImage = IMG_Load(filename);
 
-	if (loadedImage != NULL)
-	{
+	if (loadedImage != NULL) {
 		optimizedImage = SDL_DisplayFormatAlpha(loadedImage);
 		SDL_FreeSurface(loadedImage);
 	}
@@ -22,8 +21,9 @@ void apply_surface(int x, int y, SDL_Surface *source, SDL_Surface *destination)
 {
 	SDL_Rect offset;
 
-	if (source == NULL || destination == NULL)
+	if (source == NULL || destination == NULL) {
 		return;
+	}
 
 	offset.x = x;
 	offset.y = y;

@@ -1,6 +1,6 @@
 TARGET=vaders
 
-CXX=gcc
+CXX=clang
 CXXFLAGS=-Wno-unknown-pragmas
 CPPFLAGS=-g
 LDFLAGS=

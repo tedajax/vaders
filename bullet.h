@@ -6,7 +6,7 @@
 #include "util.h"
 #include "collider.h"
 
-static const int MAX_BULLETS = 2;
+static const int MAX_BULLETS = 20;
 
 static const int BULLET_PLAYER_SOURCE = 0;
 static const int BULLET_ENEMY_SOURCE = 1;
