@@ -13,7 +13,7 @@ OSX:
 
 Linux:
 
-	Prop something like
+	Prob something like
 	<package manager of choice> <install command from PM of choice> SDL SDL_image SDL_gfx
 	make
 	./vaders
