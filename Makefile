@@ -2,8 +2,8 @@ TARGET=vaders
 
 CXX=clang
 CXXFLAGS=-Wno-unknown-pragmas
-CPPFLAGS=-g
-LDFLAGS=
+CPPFLAGS=-g -std=c99
+LDFLAGS=-lm
 LDLIBS=-lSDL_image -lSDL_gfx
 
 SRCS=vaders.c util.c globals.c input.c player.c enemy.c bullet.c images.c collider.c
